@@ -5,21 +5,23 @@ import { AiOutlineHeart } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
 const CartItem = ({ item, handleIncrease, handleDecrease, handleDelete }) => {
-
   return (
-    <div className="flex items-start gap-4 border-b py-4">
+    <Link
+      className="flex items-start gap-4 border-b py-4"
+      key={item?._id}
+      to={`/product/${item?.name}`}
+      state={{ productId: item?._id }}
+    >
       <img
         src={item?.image}
         alt={item?.name}
         className="w-20 h-20 object-cover"
       />
-
       <div className="flex-1">
         <h3 className="font-medium text-sm">{item?.name}</h3>
         <p className="text-sm font-semibold mt-1">£{item?.price}</p>
         <p className="text-xs underline text-gray-500 mt-2">M (UK)</p>
       </div>
-
       <div className="flex flex-col items-end gap-2">
         <div className="flex gap-2">
           <button className="p-2 rounded-md bg-white border">
@@ -40,7 +42,9 @@ const CartItem = ({ item, handleIncrease, handleDecrease, handleDelete }) => {
           >
             −
           </button>
-          <span className="w-6 p-0.5 text-center text-xs font-normal bg-gray-50">{item.quantity}</span>
+          <span className="w-6 p-0.5 text-center text-xs font-normal bg-gray-50">
+            {item.quantity}
+          </span>
           <button
             onClick={() => handleIncrease(item.productId)}
             className="w-6 h-6 flex items-center justify-center font-semibold text-sm"
@@ -49,7 +53,7 @@ const CartItem = ({ item, handleIncrease, handleDecrease, handleDelete }) => {
           </button>
         </div>
       </div>
-    </div>
+    </Link>
   );
 };
 
