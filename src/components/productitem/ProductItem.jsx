@@ -84,7 +84,7 @@ const ProductItem = ({ item }) => {
   }, [serverWishlist, item]);
 
   return (
-    <div className={`relative flex flex-col justify-center items-center w-full mb-20`}>
+    <div className={`relative flex flex-col justify-center items-center w-full mb-20 md:mt-5`}>
       <img src={item?.image} alt={item?.name} width="500" height="500" />
       <div className="mx-3">
         <div className="flex justify-between gap-6 items-center my-5 mx-3">

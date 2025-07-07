@@ -40,9 +40,7 @@ const Product = ({ item }) => {
     }
   };
 
-
   // Load liked status from localStorage
-
   useEffect(() => {
     const checkWishlistStatus = async () => {
       const itemId = item?._id;
@@ -90,8 +88,8 @@ const Product = ({ item }) => {
       </button>
       {/* <img src={item?.image} alt={item?.name} width="500" height="500" /> */}
       <img src={item?.image} alt={item?.name} />
-      <h1 className="text-sm font-medium mt-2 tracking-wide">{item?.name}</h1>
-      <h2 className="text-xs font-medium my-7 tracking-wide">£{item?.price}</h2>
+      <h1 className="text-sm font-medium mt-2 mx-3 tracking-wide">{item?.name}</h1>
+      <h2 className="text-xs font-medium my-3 mx-3 tracking-wide">£{item?.price}</h2>
     </Link>
   );
 };
