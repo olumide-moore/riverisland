@@ -1,72 +1,45 @@
 import { useEffect, useState } from "react";
 import { PiHeartStraightFill, PiHeartStraightThin } from "react-icons/pi";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import {
+  useGetUserWishlistQuery,
+  useToggleWishlistMutation,
+} from "../../features/wishlistSlice";
+import { useLocalWishlist } from "../../contexts/WishlistContext";
 
 const Product = ({ item }) => {
   // fallback for guests
   const [isLiked, setIsLiked] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
+  const userId = user?._id;
   const token = localStorage.getItem("accessToken");
 
-  const toggleWishlist = async () => {
+  const { data: serverWishlist, isLoading } = useGetUserWishlistQuery(userId, {
+    skip: !userId,
+  });
+  const [toggleWishlist] = useToggleWishlistMutation();
+  const { localWishlist, toggleLocalWishlist } = useLocalWishlist();
 
+  const handleLikeToggle = async () => {
     const itemId = item?._id;
     if (!itemId) return;
     if (user && token) {
-      // Logged-in user - update server-side wishlist
       try {
-        const headers = {
-          token: `Bearer ${token}`,
-        };
-
-        const res = await axios.get(
-          `http://localhost:3000/api/wishlists/find/${user._id}`,
-          { headers }
-        );
-
-        const serverWishlist = res.data?.productIds || [];
-        const isInWishlist = serverWishlist.includes(itemId);
-
-        if (isInWishlist) {
-          // Remove item from wishlist
-          await axios.put(
-            `http://localhost:3000/api/wishlists/remove/${user._id}`,
-            { productId: itemId },
-            { headers }
-          );
-          setIsLiked(false);
-        } else {
-          // Add item to wishlist
-          await axios.post(
-            `http://localhost:3000/api/wishlists/add/${user._id}`,
-            { productId: itemId },
-            { headers }
-          );
-          setIsLiked(true);
-        }
+        const res = await toggleWishlist({
+          userId: userId,
+          productId: itemId,
+        }).unwrap(); // Logged-in user - update server-side wishlist
+        setIsLiked(res.liked);
       } catch (err) {
         console.error("Error updating user wishlist:", err);
       }
     } else {
       // Guest user - update localStorage
-      const localWishlist = JSON.parse(
-        localStorage.getItem("wishlist") || "[]"
-      );
-      const isInWishlist = localWishlist.includes(itemId);
-
-      const updatedWishlist = isInWishlist
-        ? localWishlist.filter((id) => id !== itemId)
-        : [...localWishlist, itemId];
-
-      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
-      setIsLiked(!isInWishlist);
+      const liked = toggleLocalWishlist(itemId);
+      setIsLiked(liked);
     }
   };
 
-  function showProduct() {
-    return "block"; // For testing purposes, always show the card
-  }
 
   // Load liked status from localStorage
 
@@ -79,46 +52,33 @@ const Product = ({ item }) => {
       if (user && token) {
         // Logged-in user: fetch wishlist from server
         try {
-          const res = await axios.get(
-            `http://localhost:3000/api/wishlists/find/${user._id}`,
-            {
-              headers: {
-                token: `Bearer ${token}`,
-              },
-            }
-          );
-          const serverWishlist = res.data?.productIds || [];
-          setIsLiked(serverWishlist.includes(itemId));
+          const productIds = serverWishlist?.productIds || [];
+          setIsLiked(productIds.includes(itemId));
         } catch (err) {
           console.error("Error fetching wishlist:", err);
           setIsLiked(false);
         }
       } else {
         // Guest: use localStorage
-        const localWishlist = JSON.parse(
-          localStorage.getItem("wishlist") || "[]"
-        );
         setIsLiked(localWishlist.includes(itemId));
       }
     };
 
     checkWishlistStatus();
-  }, [item]);
+  }, [serverWishlist, item]);
 
   return (
     <Link
       key={item?._id}
       to={`/product/${item?.name}`}
       state={{ productId: item?._id }}
-      className={`relative flex flex-col  ${
-        showProduct() ? "block" : "hidden"
-      }`}
+      className={`relative flex flex-col`}
     >
       <button
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
-          toggleWishlist();
+          handleLikeToggle();
         }}
         className="absolute top-2 right-2 bg-white p-2.5 rounded-md"
       >

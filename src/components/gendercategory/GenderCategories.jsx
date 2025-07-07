@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import GenderCategory from "./GenderCategory";
+import { API_URL } from "../../config";
 
 export const GenderCategories = () => {
   const [gendercategories, setGenderCategories] = useState([]);
   useEffect(() => {
     const getGenderCategories = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/api/categories/");
+        const res = await axios.get(`${API_URL}/api/categories/`);
         setGenderCategories(res.data);
       } catch (err) {}
     };

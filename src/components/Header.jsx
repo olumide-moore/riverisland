@@ -9,7 +9,7 @@ import { useLocalCart } from "../contexts/CartContext";
 const Header = (props) => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;
-  const { data: backendCart } = useGetUserCartQuery(userId, {
+  const { data: serverCart } = useGetUserCartQuery(userId, {
     skip: !userId,
   });
 
@@ -20,7 +20,7 @@ const Header = (props) => {
   useEffect(() => {
     let count;
     if (userId) {
-      count = backendCart?.products?.reduce(
+      count = serverCart?.products?.reduce(
         (acc, item) => acc + item.quantity,
         0
       );
@@ -28,7 +28,7 @@ const Header = (props) => {
       count = localCartCount;
     }
     setCartCount(count);
-  }, [backendCart, localCartCount, localCart]);
+  }, [serverCart, localCartCount, localCart]);
 
   return (
     <>
