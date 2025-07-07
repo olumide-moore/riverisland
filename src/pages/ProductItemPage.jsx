@@ -1,27 +1,11 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
 import { useLocation } from "react-router-dom";
 import ProductItem from "../components/productitem/ProductItem";
+import { useGetAProductQuery } from "../features/productSlice";
 
 const ProductItemPage = () => {
   const location= useLocation();
   const id = location.state?.productId;
-  const [product, setProduct] = useState(null);
-
-
-  useEffect(() => {
-    const getProduct = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3000/api/products/find/${id}`
-        );
-        setProduct(res.data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getProduct();
-  }, []);
+  const {data: product, isLoading, isError} = useGetAProductQuery(id);
 
   return (
     <div>

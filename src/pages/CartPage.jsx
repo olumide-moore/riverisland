@@ -4,19 +4,35 @@ import { BsHeartbreakFill } from "react-icons/bs";
 import CartItem from "../components/cart/CartItem";
 import { PiBagLight, PiLockKey } from "react-icons/pi";
 import { Link } from "react-router-dom";
-import { useGetUserCartQuery, useAddToCartMutation, useDecreaseFromCartMutation, useDeleteCartItemMutation } from "../features/cartSlice";
+import {
+  useGetUserCartQuery,
+  useAddToCartMutation,
+  useDecreaseFromCartMutation,
+  useDeleteCartItemMutation,
+} from "../features/cartSlice";
 import { useLocalCart } from "../contexts/CartContext";
+import { useGetProductsMutation } from "../features/productSlice";
 
 const CartPage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user?._id;
 
-  const { data: backendCart, isLoading } = useGetUserCartQuery(userId, { skip: !userId});
+  const { data: serverCart, isLoading: cartLoading } = useGetUserCartQuery(
+    userId,
+    { skip: !userId }
+  );
+  const [getProducts, { isLoading: productsLoading }] =
+    useGetProductsMutation();
 
   const [addToCart] = useAddToCartMutation();
   const [decreaseFromCart] = useDecreaseFromCartMutation();
   const [deleteCartItem] = useDeleteCartItemMutation();
-  const { localCart, addToLocalCart, decreaseFromLocalCart, deleteLocalCartItem } = useLocalCart();
+  const {
+    localCart,
+    addToLocalCart,
+    decreaseFromLocalCart,
+    deleteLocalCartItem,
+  } = useLocalCart();
 
   const handleIncrease = (productId) => {
     if (userId) {
@@ -30,36 +46,20 @@ const CartPage = () => {
     if (userId) {
       decreaseFromCart({ userId, productId });
     } else {
-       decreaseFromLocalCart(productId)
-      }
+      decreaseFromLocalCart(productId);
+    }
   };
 
   const handleDelete = (productId) => {
     if (userId) {
       deleteCartItem({ userId, productId });
     } else {
-     deleteLocalCartItem(productId);
+      deleteLocalCartItem(productId);
     }
   };
 
   const [cartItems, setCartItems] = useState([]);
 
-  async function getProductsByIds(productIds) {
-    try {
-      if (productIds.length > 0) {
-        //Get the products of the productIds
-        const res = await axios.post(
-          "http://localhost:3000/api/products/find-many",
-          { ids: productIds }
-        );
-        return res.data;
-      } else {
-        return [];
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }
   function calculateTotal() {
     return cartItems
       .reduce((acc, item) => acc + item.price * item.quantity, 0)
@@ -69,10 +69,10 @@ const CartPage = () => {
   useEffect(() => {
     const getCartItems = async () => {
       try {
-        const cartProducts = userId ? backendCart?.products || [] : localCart;
-        // console.log(userId);
+        const cartProducts = userId ? serverCart?.products || [] : localCart;
         const productIds = cartProducts.map((item) => item.productId);
-        const products = await getProductsByIds(productIds);
+        const products = await getProducts(productIds).unwrap();
+
         const cartItems = cartProducts.map((item) => ({
           ...item,
           ...products.find((product) => product._id === item.productId),
@@ -83,11 +83,11 @@ const CartPage = () => {
       }
     };
     getCartItems();
-  }, [backendCart, localCart]);
+  }, [serverCart, localCart]);
 
   return (
     <div className="mx-14 mt-8 mb-20">
-      {isLoading && <p>Loading...</p>}
+      {cartLoading && <p>Loading...</p>}
       <h2 className="text-3xl font-open-sans font-medium text-center">Bag</h2>
       {cartItems.length > 0 ? (
         <div className="lg:flex lg:justify-center lg:gap-20">

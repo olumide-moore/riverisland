@@ -1,31 +1,18 @@
-import { useState, useEffect, useRef } from "react";
-import axios from "axios";
+import { useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import Products from "../components/products/Products";
 import ProductsFiltersGroup from "../components/products/productsfilter/ProductsFiltersGroup";
+import { useGetCategoryProductsQuery } from "../features/productSlice";
 
 const ProductsPage = () => {
   const { categoryid } = useParams();
   const location = useLocation();
   const category = location.state.category;
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
   const [filters, setFilters]= useState({});
   const [selectedSort, setSelectedSort] = useState("Latest");
 
-  useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const res = await axios.get(
-          `http://localhost:3000/api/products?category=${categoryid}`
-        );
-        const data = res.data;
-        setProducts(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getProducts();
-  }, []);
+  const { data: products, isLoading } = useGetCategoryProductsQuery(categoryid);
 
   return (
     <div className="mx-10">
@@ -42,7 +29,10 @@ const ProductsPage = () => {
           </div> */}
       </div>
       <ProductsFiltersGroup filters={filters} setFilters={setFilters} sizeType={category?.sizeType} selectedSort={selectedSort} setSelectedSort={setSelectedSort}/>
+      {products &&
+      
       <Products products={products} filters={filters} selectedSort={selectedSort}/>
+      }
     </div>
   );
 };
