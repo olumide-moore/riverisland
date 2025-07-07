@@ -10,7 +10,7 @@ const ProductsFiltersGroup = ({
   setSelectedSort,
 }) => {
   return (
-    <div className="flex flex-nowrap items-center justify-between gap-4 my-3">
+    <div className="flex flex-nowrap items-center justify-between sm:gap-4 my-3">
       <div className="flex flex-wrap items-center gap-1">
         <Filter
           filterName="Color"
