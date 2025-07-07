@@ -71,7 +71,7 @@ const LoginDetails = ({ email }) => {
 
       {/* Recent purchases */}
       <section>
-        <h2 className="text-xl font-medium mb-8">LOGIN DETAILS</h2>
+        <h2 className="text-xl font-medium">LOGIN DETAILS</h2>
         <div className="bg-[#f7f3ed] p-12 text-center flex flex-col gap-0 md:px-28">
           <div className="flex justify-center">
             <div className="flex flex-col justify-center items-start gap-5 w-full">

@@ -64,7 +64,7 @@ const Footer = () => {
   ];
 
   return (
-    <footer className="bg-gray-100 text-gray-700 pt-14 px-6">
+    <footer className="bg-gray-100 text-gray-700 pt-14 px-6 mt-20">
       <div className="text-6xl mb-8">RI</div>
       <div className="md:w-full grid md:grid-cols-3 gap-14">
         <div>

@@ -5,7 +5,7 @@ const AccountOverview = () => {
 
       {/* Recent purchases */}
       <section>
-        <h2 className="text-xl font-medium mb-8">RECENT PURCHASES</h2>
+        <h2 className="text-xl font-medium">RECENT PURCHASES</h2>
         <div className="bg-[#f7f3ed] p-12 text-center flex flex-col gap-3">
           <p className="text-xl font-medium">0 Recent orders</p>
           <p className="text-sm mt-1 text-nowrap">You haven't placed any orders yet</p>

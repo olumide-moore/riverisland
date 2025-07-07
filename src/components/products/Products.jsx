@@ -42,7 +42,7 @@ const Products = ({ products, filters, selectedSort }) => {
   }, [selectedSort]);
 
   return (
-    <div className="mb-20">
+    <div>
       <div className="font-bold text-xs text-gray-600 mx-3 py-4 uppercase">
         {filteredProducts.length} PRODUCTS
       </div>

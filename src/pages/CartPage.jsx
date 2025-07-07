@@ -94,7 +94,7 @@ const CartPage = () => {
   }
   return (
     
-    <div className="mx-14 mt-8 mb-20">
+    <div className="mx-14 mt-8">
       <h2 className="text-3xl font-open-sans font-medium text-center">Bag</h2>
       {cartItems.length > 0 ? (
         <div className="lg:flex lg:justify-center lg:gap-20">
