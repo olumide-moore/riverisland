@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { API_URL } from "../../config";
 
 const SignupPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const email = location.state?.email || "";
+
+  const titles = ["Miss.", "Mr.", "Mrs.", "Ms.", "Mx."];
 
   const currentYear = new Date().getFullYear();
   const years = Array.from({ length: 101 }, (_, i) => currentYear - 16 - i);
@@ -26,6 +29,7 @@ const SignupPage = () => {
   ];
 
   // State hooks for form inputs
+  const [title, setTitle] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
@@ -37,17 +41,29 @@ const SignupPage = () => {
   const handleSignUp = async () => {
     setError("");
 
-    if (!firstName || !lastName || !password || !day || !month || !year) {
+    if (
+      !title ||
+      !firstName ||
+      !lastName ||
+      !password ||
+      !day ||
+      !month ||
+      !year
+    ) {
       setError("Please fill in all fields");
       return;
     }
 
-    const dob = `${year}-${String(month).padStart(2, "0")}-${String(
-      day
-    ).padStart(2, "0")}`;
+    const dob = new Date(
+      `${year}-${String(month).padStart(2, "0")}-${String(day).padStart(
+        2,
+        "0"
+      )}`
+    );
     try {
-      const res = await axios.post(`http://localhost:3000/api/auth/register`, {
+      const res = await axios.post(`${API_URL}/api/auth/register`, {
         email,
+        title,
         firstName,
         lastName,
         dob,
@@ -75,6 +91,18 @@ const SignupPage = () => {
           value={email}
           className="text-sm font-normal text-gray-500 h-12 p-2 border border-gray-300 rounded-sm"
         />
+        <select
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="text-sm font-normal text-gray-500 w-1/2 h-12 p-2 border border-gray-300 rounded-sm"
+        >
+          <option value="">Title</option>
+          {titles.map((d) => (
+            <option key={d} value={d}>
+              {d}
+            </option>
+          ))}
+        </select>
         <input
           type="text"
           placeholder="First name"

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom"; // If using React Router
+import { API_URL } from "../../config";
 
 const GetEmailPage = () => {
   const [email, setEmail] = useState("");
@@ -12,13 +13,22 @@ const GetEmailPage = () => {
       setError("Please enter an email address.");
       return;
     }
+    
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Validate email format
+    if (!emailRegex.test(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
 
     try {
-      const res = await axios.post("http://localhost:3000/api/auth/verify-email", { email });
+      const res = await axios.post(
+        `${API_URL}/api/auth/verify-email`,
+        { email }
+      );
       if (res.data.exists) {
-        navigate("/login", { state: { email } });// Navigate to login page, passing email as state or param
+        navigate("/login", { state: { email } }); // Navigate to login page, passing email as state or param
       } else {
-        navigate("/signup", { state: { email } });// Navigate to signup page, passing email as state or param
+        navigate("/signup", { state: { email } }); // Navigate to signup page, passing email as state or param
       }
     } catch (err) {
       console.error(err);
@@ -48,7 +58,8 @@ const GetEmailPage = () => {
         </button>
         {error && <p className="text-sm text-red-500">{error}</p>}
         <p className="text-wrap text-sm font-normal text-gray-500">
-          If you don't have an account with us yet, you will be asked to create one
+          If you don't have an account with us yet, you will be asked to create
+          one
         </p>
       </div>
     </div>

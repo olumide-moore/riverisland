@@ -2,7 +2,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useLocalCart } from "../../contexts/CartContext";
+import { useLocalWishlist } from "../../contexts/WishlistContext";
+import { useAddManyToWishlistMutation } from "../../features/wishlistSlice";
 import { useAddManyToCartMutation } from "../../features/cartSlice";
+import { API_URL } from "../../config";
 
 const LoginPage = () => {
   const location = useLocation();
@@ -12,11 +15,13 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const { localCart, setLocalCart } = useLocalCart();
+  const {localWishlist, setLocalWishlist} =useLocalWishlist();
+  const [addManyToWishList] = useAddManyToWishlistMutation();
   const [addManyToCart] = useAddManyToCartMutation();
 
   const handleLogin = async () => {
     try {
-      const res = await axios.post(`http://localhost:3000/api/auth/login`, {
+      const res = await axios.post(`${API_URL}/api/auth/login`, {
         email,
         password,
       });
@@ -28,29 +33,16 @@ const LoginPage = () => {
       localStorage.setItem("accessToken", res.data.accessToken);
 
       // Check for guest wishlist in localStorage
-      const wishlist = JSON.parse(localStorage.getItem("wishlist"));
-      if (wishlist && Array.isArray(wishlist) && wishlist.length > 0) {
-        // Send items to backend to merge with user wishlist
-        await axios.post(
-          `http://localhost:3000/api/wishlists/add-many/${res.data._id}`,
-          { productIds: wishlist },
-          {
-            headers: {
-              token: `Bearer ${res.data.accessToken}`,
-            },
-          }
-        );
-        localStorage.removeItem("wishlist"); // Clear guest wishlist from localStorage
+      if (localWishlist && Array.isArray(localWishlist) && localWishlist.length > 0) {
+        addManyToWishList({ userId, productIds: localWishlist }); // Send items to backend to merge with user wishlist
       }
-      //Check for guest cart in localStorage
-        console.log(localCart);
-      if (localCart && Array.isArray(localCart) && localCart.length > 0) {
-        addManyToCart({ userId, products:  localCart });
+     
+      if (localCart && Array.isArray(localCart) && localCart.length > 0) { //Check for guest cart in localStorage
+        addManyToCart({ userId, products: localCart });
       }
-
-      // Redirect to homepage
-      setLocalCart([]);
-      navigate("/");
+      setLocalWishlist([]);
+      setLocalCart([]); //Clear localCart and localWishlist
+      navigate("/");// Redirect to homepage
     } catch (err) {
       console.error(err);
       setError("Invalid password or user does not exist");
