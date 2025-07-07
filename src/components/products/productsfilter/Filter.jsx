@@ -40,7 +40,7 @@ const Filter = ({ filterName, options, filters, setFilters }) => {
     <div ref={ref} className="relative inline-block text-left">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className={`inline-flex justify-between gap-2 items-center w-full py-4 px-2 text-xs font-bold bg-transparent focus:outline-none cursor-pointer ${
+        className={`inline-flex justify-between gap-2 items-center w-full py-4 pr-2 text-xs font-bold bg-transparent focus:outline-none cursor-pointer ${
           isOpen ? "border border-b-0" : ""
         }`}
       >
