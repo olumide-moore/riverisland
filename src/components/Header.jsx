@@ -1,9 +1,9 @@
-import { CiHeart, CiSearch, CiUser } from "react-icons/ci";
 import { PiBagLight } from "react-icons/pi";
 import { Link } from "react-router-dom";
 import { useGetUserCartQuery } from "../features/cartSlice";
 import { useEffect, useState } from "react";
 import { useLocalCart } from "../contexts/CartContext";
+import { FiHeart, FiUser } from "react-icons/fi";
 
 // import { useEffect } from "react";
 const Header = (props) => {
@@ -13,7 +13,7 @@ const Header = (props) => {
     skip: !userId,
   });
 
-  const { localCart,localCartCount } = useLocalCart();
+  const { localCart, localCartCount } = useLocalCart();
 
   const [cartCount, setCartCount] = useState(0);
 
@@ -38,8 +38,8 @@ const Header = (props) => {
         <p>Gift great taste | Gift Cards</p>
         <p>Klarna available | Find out more</p>
       </div>
-      <div className="sticky top-0 z-50 w-full">
-        <div className="flex items-center justify-between border-b-[1px] border-neutral-300 shadow-sm shadow-neutral-100 bg-white gap-1 px-8 py-2">
+      <div className="sticky top-0 z-50 w-full border-b-[1px] border-neutral-300 shadow-sm shadow-neutral-100 bg-white py-2 mb-4">
+        <div className="flex items-center justify-between gap-1 px-8 py-2">
           <div className="flex items-center gap-4">
             <button
               aria-controls="sidebar"
@@ -99,34 +99,47 @@ const Header = (props) => {
             </h1>
             <h1 className="text-sm font-medium cursor-pointer px-2.5">Jeans</h1> */}
           </div>
-          <div className="flex gap-3">
-            {/* <div className="flex py-2 px-3 gap-1.5 border border-gray-200 rounded-[3px] cursor-pointer">
+          <div className="flex lg:gap-3">
+            {/* <div className="flex py-1.5 px-2.5 gap-1.5 lg:border-gray-200 rounded-[4px] cursor-pointer">
               <CiSearch className="text-neutral-700" size="14" />
-              <p className="font-normal text-xs text-[#3D3935]">Search</p>
+              <p className="font-normal text-xs text-[#3D3935] hidden lg:block">Search</p>
             </div> */}
             <Link
-              className="flex py-2 px-3 gap-1.5 border border-gray-200 rounded-[3px] cursor-pointer"
+              className="flex items-center py-1.5 px-2.5 gap-1.5 lg:border border-gray-200 rounded-[4px] cursor-pointer"
               to={`/getemail`}
             >
-              <CiUser className="text-[#3D3935]" size="15" />
-              <p className="font-normal text-xs text-[#3D3935]">Account</p>
+              <FiUser className="text-[#3D3935]" size="17" />
+              <p className="font-normal text-xs text-[#3D3935] hidden lg:block">
+                Account
+              </p>
             </Link>
             <Link
-              className="flex py-2 px-3 gap-1.5 border border-gray-200 rounded-[3px] cursor-pointer"
+              className="flex items-center py-1.5 px-2.5 gap-1.5 lg:border border-gray-200 rounded-[4px] cursor-pointer"
               to={`/wishlist`}
             >
-              <CiHeart className="text-[#3D3935]" size="15" />
-              <p className="font-normal text-xs text-[#3D3935]">Wishlist</p>
+              <FiHeart className="text-[#3d3935]" size="17" />
+              <p className="font-normal text-xs text-[#3D3935] hidden lg:block">
+                Wishlist
+              </p>
             </Link>
             <Link
-              className="flex py-2 px-3 gap-1.5 rounded-[3px] cursor-pointer bg-yellow-300 bg-opacity-90"
-              to={`/cart`}
+              className=" relative flex items-center py-1.5 px-2.5 gap-1.5 rounded-[4px] cursor-pointer bg-yellow-300 bg-opacity-90"
+              to="/cart"
             >
-              <PiBagLight className="text-neutral-700" size="15" />
-              <p className="font-normal text-xs text-[#3D3935]">Bag</p>
-              <span className="text-xs font-semibold text-black">
-                {cartCount}
-              </span>
+              <div className="relative w-5 h-6">
+                <PiBagLight className="text-neutral-700" size="19" />
+
+                  <span className={`absolute top-2.5 -right-2 bg-[#3d3935] text-white text-[11px] font-semibold rounded-full py-[1px] px-1.5 ${cartCount>0 ? 'block lg:hidden' : 'hidden'}`}>
+                    {cartCount}
+                  </span>
+              </div>
+
+              <p className="font-normal text-xs text-[#3D3935] hidden lg:block">
+                Bag
+              </p>
+               <span className={`absolute -bottom-1.5 -right-2 bg-[#3d3935] text-white text-[11px] font-semibold rounded-full py-[1px] px-1.5 ${cartCount>0 ? 'hidden lg:block' : 'hidden'}`}>
+                    {cartCount}
+                  </span>
             </Link>
           </div>
         </div>
