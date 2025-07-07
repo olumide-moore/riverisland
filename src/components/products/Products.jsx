@@ -18,8 +18,6 @@ const Products = ({ products, filters, selectedSort }) => {
   };
 
   const sortProducts = () => {
-    // console.log(selectedSort);
-    // console.log(filteredProducts);
     if (selectedSort === "Latest") {
       setFilteredProducts((prev) =>
         [...prev].sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
@@ -33,17 +31,6 @@ const Products = ({ products, filters, selectedSort }) => {
         [...prev].sort((a, b) => b.price - a.price)
       );
     }
-    // setFilteredProducts(
-    //   prods.filter((prod) =>
-    //     Object.entries(filters).every(([key, values]) => {
-    //       if (!values.length) return true;
-    //       if (key=='price'){
-    //         return (prod[key]>=values[0] && prod[key]<=values[1])
-    //       }
-    //       return values.includes(prod[key]);
-    //     })
-    //   )
-    // );
   };
 
   useEffect(() => {
@@ -56,7 +43,7 @@ const Products = ({ products, filters, selectedSort }) => {
 
   return (
     <div>
-      <div className="font-bold text-xs text-gray-600 py-4 uppercase">
+      <div className="font-bold text-xs text-gray-600 mx-3 py-4 uppercase">
         {filteredProducts.length} PRODUCTS
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4 box-border">
