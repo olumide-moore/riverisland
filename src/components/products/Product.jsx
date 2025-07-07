@@ -80,12 +80,12 @@ const Product = ({ item }) => {
           e.stopPropagation();
           handleLikeToggle();
         }}
-        className="absolute top-2 right-2 bg-white p-2.5 rounded-md"
+        className="absolute top-2 right-2 bg-white p-2 rounded-md"
       >
         {isLiked ? (
-          <PiHeartStraightFill className="fill-gray-900" size={20} />
+          <PiHeartStraightFill className="fill-gray-900" size={18} />
         ) : (
-          <PiHeartStraightThin className="text-black stroke" size={20} />
+          <PiHeartStraightThin className="text-black stroke" size={16} />
         )}
       </button>
       {/* <img src={item?.image} alt={item?.name} width="500" height="500" /> */}
