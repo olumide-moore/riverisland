@@ -84,33 +84,35 @@ const ProductItem = ({ item }) => {
   }, [serverWishlist, item]);
 
   return (
-    <div className={`relative flex flex-col`}>
+    <div className={`relative flex flex-col justify-center items-center w-full mb-20`}>
       <img src={item?.image} alt={item?.name} width="500" height="500" />
-      <div className="flex justify-between items-center border-red-200 my-5 mx-3">
-        <h1 className="text-lg font-bold tracking-wide">{item?.name}</h1>
-        <h2 className="text-base font-bold tracking-wide">£{item?.price}</h2>
-      </div>
-      <div className="flex gap-3">
-        <button
-          onClick={handleAddToCart}
-          className="flex-1 rounded-lg cursor-pointer bg-yellow-300 bg-opacity-90 font-bold text-sm"
-        >
-          Add to bag
-        </button>
-        <button
-          className="bg-white p-3 rounded-md border"
-          onClick={(e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            handleLikeToggle();
-          }}
-        >
-          {isLiked ? (
-            <PiHeartStraightFill className="fill-gray-900" size={20} />
-          ) : (
-            <PiHeartStraightThin className="text-black stroke" size={20} />
-          )}
-        </button>
+      <div className="mx-3">
+        <div className="flex justify-between gap-6 items-center my-5 mx-3">
+          <h1 className="text-lg font-bold tracking-wide">{item?.name}</h1>
+          <h2 className="text-base font-bold tracking-wide">£{item?.price}</h2>
+        </div>
+        <div className="flex gap-4">
+          <button
+            onClick={handleAddToCart}
+            className="flex-1 rounded-lg cursor-pointer bg-yellow-300 bg-opacity-90 font-bold text-sm"
+          >
+            Add to bag
+          </button>
+          <button
+            className="bg-white p-3 rounded-md border"
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              handleLikeToggle();
+            }}
+          >
+            {isLiked ? (
+              <PiHeartStraightFill className="fill-gray-900" size={20} />
+            ) : (
+              <PiHeartStraightThin className="text-black stroke" size={20} />
+            )}
+          </button>
+        </div>
       </div>
     </div>
   );
