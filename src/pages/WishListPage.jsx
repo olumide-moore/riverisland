@@ -7,6 +7,7 @@ import {
 } from "../features/wishlistSlice";
 import { useLocalWishlist } from "../contexts/WishlistContext";
 import { useGetProductsMutation } from "../features/productSlice";
+import { Link } from "react-router-dom";
 
 const WishListPage = () => {
   const user = JSON.parse(localStorage.getItem("user")); // get user data and token
@@ -78,12 +79,16 @@ const WishListPage = () => {
               to access your favourite items whenever you want.
             </p>
             <div className="mt-4 flex justify-center space-x-3">
-              <button className="bg-yellow-300 text-black text-sm font-normal w-1/2 sm:w-40 p-3 rounded">
+              <Link
+              to={`/login`}
+               className="bg-yellow-300 text-black text-sm font-normal w-1/2 sm:w-40 p-3 rounded">
                 Sign in
-              </button>
-              <button className="border border-gray-300 text-gray-900 bg-white text-sm font-normal  w-1/2 sm:w-40 p-3 rounded">
+              </Link>
+              <Link 
+              to={`/signup`}
+              className="border border-gray-300 text-gray-900 bg-white text-sm font-normal  w-1/2 sm:w-40 p-3 rounded">
                 Create an account
-              </button>
+              </Link>
             </div>
           </div>
           <div className="flex flex-col justify-center items-center gap-1 mt-10 border p-4 border-dashed rounded-md">
