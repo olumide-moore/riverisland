@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { useState } from "react";
 import DefaultLayout from "./layout/DefaultLayout";
 import HomePage from "./pages/HomePage";
 import CategoriesPage from "./pages/CategoriesPage";
@@ -9,7 +8,6 @@ import GetEmailPage from "./pages/Auth/GetEmailPage";
 import LoginPage from "./pages/Auth/LoginPage";
 import SignupPage from "./pages/Auth/SignupPage";
 import WishListPage from "./pages/WishListPage";
-import AccountOverview from "./pages/Account/AccountOverview";
 import RequireNoAuth from "./components/account/RequireNoAuth";
 import Account from "./pages/Account/Account";
 import { Provider } from "react-redux";
