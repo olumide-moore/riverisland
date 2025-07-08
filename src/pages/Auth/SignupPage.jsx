@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { API_URL } from "../../config";
@@ -77,7 +77,9 @@ const SignupPage = () => {
       setError("Registration failed. Please try again.");
     }
   };
-
+ useEffect(() => {
+    !email && navigate("/getemail");
+  }, []);
   return (
     <div className="flex justify-center">
       <div className="flex flex-col justify-center gap-5 mt-20 w-80">
