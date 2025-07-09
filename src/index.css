@@ -24,3 +24,6 @@ body {
     -ms-overflow-style: none;  /* IE and Edge */
     scrollbar-width: none;  /* Firefox */
 }
+.group:hover .peer:not(:hover) {
+  opacity: 0.5;
+}
