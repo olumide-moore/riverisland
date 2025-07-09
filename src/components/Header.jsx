@@ -37,13 +37,16 @@ const Header = () => {
       </div>
 
       {/* Main Header */}
-      <header className="sticky top-0 z-50 w-full bg-white shadow-sm border-b border-neutral-300">
-        <div className="flex items-center justify-between px-6 py-4">
+      <header className="sticky top-0 z-50 h-14 w-full bg-white shadow-md border-b border-neutral-300">
+        <div className="flex items-center justify-between px-6 h-full">
+        <div className="flex">
           {/* Logo with Hamburger */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-4 mr-20">
             <button
               onClick={() => setSidebarOpen(!sidebarOpen)}
-              className={`lg:hidden focus:outline-none z-50 ${sidebarOpen && 'hidden'}`}
+              className={`lg:hidden focus:outline-none z-50 ${
+                sidebarOpen && "hidden"
+              }`}
             >
               <div className="space-y-1">
                 <span className="block h-0.5 w-6 bg-black"></span>
@@ -56,14 +59,30 @@ const Header = () => {
             </Link>
           </div>
 
-          <nav className="hidden xl:flex gap-6 ml-32">
-            <Link to="/women" className="text-base font-medium cursor-pointer px-2.5">
-              Women
-            </Link>
-            <Link to="/men" className="text-base font-medium cursor-pointer px-2.5">
-              Men
-            </Link>
+          <nav className="hidden lg:flex gap-6 group">
+            <div className="flex justify-center items-center gap-6 text-sm font-normal">
+              <Link
+                to="/women"
+                className="text-black py-[17px] px-2.5 peer hover:text-black hover:border-b hover:border-black"
+              >
+                Women
+              </Link>
+              <Link
+                to="/men"
+                className="text-black py-[17px] px-2.5 peer hover:text-black hover:border-b hover:border-black"
+              >
+                Men
+              </Link>
+              {/* <Link
+                to="/kids"
+                className="text-black py-[17px] px-2.5 peer hover:text-black hover:border-b hover:border-black"
+              >
+                Kids
+              </Link> */}
+            </div>
           </nav>
+          </div>
+
           <div className="flex lg:gap-3">
             {/* <div className="flex py-1.5 px-2.5 gap-1.5 lg:border-gray-200 rounded-[4px] cursor-pointer">
               <CiSearch className="text-neutral-700" size="14" />
@@ -141,12 +160,20 @@ const Header = () => {
           </div>
           <ul className="flex flex-col gap-6 mt-12 ml-5 text-lg">
             <li>
-              <Link to="/women" className="text-gray-700 text-2xl font-normal cursor-pointer px-2.5" onClick={() => setSidebarOpen(false)}>
+              <Link
+                to="/women"
+                className="text-gray-700 text-2xl font-normal cursor-pointer px-2.5"
+                onClick={() => setSidebarOpen(false)}
+              >
                 Women
               </Link>
             </li>
             <li>
-              <Link to="/men" className="text-gray-700 text-2xl font-normal cursor-pointer px-2.5" onClick={() => setSidebarOpen(false)}>
+              <Link
+                to="/men"
+                className="text-gray-700 text-2xl font-normal cursor-pointer px-2.5"
+                onClick={() => setSidebarOpen(false)}
+              >
                 Men
               </Link>
             </li>
