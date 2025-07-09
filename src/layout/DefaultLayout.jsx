@@ -4,7 +4,7 @@ import Footer from "../components/Footer";
 const DefaultLayout = ({ children }) => {
 
   return (
-      <div className="mx-auto flex h-screen">
+      <div className="mx-auto flex min-h-screen">
         <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
           <Header/>
           <main>
