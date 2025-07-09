@@ -21,7 +21,7 @@ export const GenderCategories = () => {
 
   }, []);
   return (
-    <div className="mx-5">
+    <div className="mx-0">
        {isLoading && (
         <div className="fixed inset-0 bg-white bg-opacity-90 z-50 flex items-center justify-center">
           <div className="w-12 h-12 border-4 border-gray-300 border-t-black rounded-full animate-spin"></div>
@@ -29,7 +29,7 @@ export const GenderCategories = () => {
       )}
 
       {/* <h2 className="text-3xl font-open-sans font-normal py-3">Categories</h2> */}
-      <div className="grid grid-cols-2 md:grid-cols-2 gap-4 box-border">
+      <div className="grid grid-rows-2 md:grid-rows-2 gap-4 box-border">
         {gendercategories.map((cat) => (
           <GenderCategory key={cat?._id} gendercategory={cat} />
         ))}
