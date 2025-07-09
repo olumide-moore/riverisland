@@ -57,7 +57,8 @@ const ProductsFiltersGroup = ({
               { label: "18", count: 34 },
               { label: "20", count: 34 },
               { label: "22", count: 34 },
-            ]) ||
+            ]) 
+            ||
             (sizeType == "shoe" && [
               { label: "6", count: 23 },
               { label: "7", count: 29 },
@@ -66,6 +67,10 @@ const ProductsFiltersGroup = ({
               { label: "10", count: 39 },
               { label: "11", count: 37 },
               { label: "12", count: 37 },
+            ])
+            ||
+            (sizeType == "" && [
+              { label: "", count: 23 },
             ])
           }
           filters={filters}
