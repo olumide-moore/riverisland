@@ -6,17 +6,18 @@ import { Link } from "react-router-dom";
 
 const CartItem = ({ item, handleIncrease, handleDecrease, handleDelete }) => {
   return (
-    <Link
-      className="flex items-start gap-4 border-b py-4"
-      key={item?._id}
-      to={`/product/${item?.name}`}
-      state={{ productId: item?._id }}
-    >
-      <img
-        src={item?.image}
-        alt={item?.name}
-        className="w-20 h-20 object-cover"
-      />
+    <div className="flex items-start gap-4 border-b py-4">
+      <Link
+        key={item?._id}
+        to={`/product/${item?.name}`}
+        state={{ productId: item?._id }}
+      >
+        <img
+          src={item?.image}
+          alt={item?.name}
+          className="w-20 h-20 object-cover"
+        />
+      </Link>
       <div className="flex-1">
         <h3 className="font-medium text-sm">{item?.name}</h3>
         <p className="text-sm font-semibold mt-1">£{item?.price}</p>
@@ -53,7 +54,7 @@ const CartItem = ({ item, handleIncrease, handleDecrease, handleDelete }) => {
           </button>
         </div>
       </div>
-    </Link>
+    </div>
   );
 };
 
