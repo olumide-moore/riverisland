@@ -13,11 +13,14 @@ import Account from "./pages/Account/Account";
 import { Provider } from "react-redux";
 import { store } from "./store";
 import CartPage from "./pages/CartPage";
+import { Suspense } from "react";
 
 export default function App() {
   return (
     <Provider store={store}>
       <DefaultLayout>
+        <Suspense fallback={<div className="text-center mt-10">Loading...</div>}>
+
         <Routes>
           <Route
             index
@@ -56,6 +59,8 @@ export default function App() {
           />
           <Route path="/myaccount" element={<Account />} />
         </Routes>
+        </Suspense>
+
       </DefaultLayout>
     </Provider>
   );
