@@ -23,6 +23,7 @@ const ProductsFiltersGroup = ({
             { label: "Green", count: 37 },
             { label: "Red", count: 37 },
             { label: "Yellow", count: 37 },
+            { label: "Purple", count: 37 },
           ]}
           filters={filters}
           setFilters={setFilters}
@@ -45,6 +46,17 @@ const ProductsFiltersGroup = ({
               { label: "32", count: 43 },
               { label: "34", count: 39 },
               { label: "36", count: 37 },
+            ]) ||
+            (sizeType == "dress-numbered" && [
+              { label: "6", count: 30 },
+              { label: "8", count: 42 },
+              { label: "10", count: 45 },
+              { label: "12", count: 38 },
+              { label: "14", count: 34 },
+              { label: "16", count: 34 },
+              { label: "18", count: 34 },
+              { label: "20", count: 34 },
+              { label: "22", count: 34 },
             ]) ||
             (sizeType == "shoe" && [
               { label: "6", count: 23 },
